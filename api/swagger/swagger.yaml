@@ -1,0 +1,114 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: authentication Data Access API 2
+# during dev, should point to your local machine
+host: localhost:10100
+# basePath prefixes all resource paths 
+basePath: /
+ 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+
+paths:
+  /authenticateUser:
+    get:
+      description: Authenticate User and Return Token
+      x-swagger-router-controller: auth
+      operationId: authenticateUser
+
+      parameters:
+        -
+          name: name
+          in: query
+          description: User Name
+          required: true
+          type: string
+        -
+          name: pword
+          in: query
+          description: Password
+          required: true
+          type: string
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            required:
+              - token
+              - userId
+            properties:
+              token:
+                type: string
+              userId:
+                type: string
+
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"          
+            
+  /checkToken:
+    get:
+      description: Check Token
+      x-swagger-router-controller: auth
+      operationId: checkToken
+
+      parameters:
+        -
+          name: name
+          in: query
+          description: User Name
+          required: true
+          type: string
+        -
+          name: token
+          in: query
+          description: Token to authenticate
+          required: true
+          type: string
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            required:
+              - token
+              - userId
+            properties:
+              token:
+                type: string
+              userId:
+                type: string
+
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"     
+
+  /swagger:
+    x-swagger-pipe: swagger_raw
+    
+# complex objects have schema definitions
+definitions:
+
+  ErrorResponse:
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string  

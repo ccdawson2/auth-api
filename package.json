@@ -1,0 +1,29 @@
+{
+  "name": "auth-api",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Swagger Authentication API",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "express": "^4.12.3",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.10.4",
+    "swagger-express-mw": "^0.1.0"
+  },
+  "devDependencies": {
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "swagger project test",
+    "deploy": "gcloud app deploy --project auth-api-01"
+  },
+  "engines": {
+    "node": ">=0.10.3 <6.10.0"
+  }
+}
